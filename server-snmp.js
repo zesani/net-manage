@@ -3,9 +3,12 @@ var app = express()
 var snmp = require('snmp-native')
 let firebase = require('firebase')
 var bodyParser = require('body-parser')
+var path = require('path')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 // var moment = require('moment')
+var staticPath = path.join(__dirname, './dist')
+app.use('/', express.static(staticPath))
 var config = {
   apiKey: 'AIzaSyBe7u9FtZ5ATGU69hfd9NBbHiGCGreSWIM',
   authDomain: 'snmp-monitor-fitm.firebaseapp.com',
@@ -74,6 +77,7 @@ app.post('/remove', function (req, res) {
   } else {
     devices.splice(indexInfo2, 1)
   }
+  firebase.database().ref('/info/' + req.body.name).remove()
 })
 function getInfo (device) {
   let info = {}

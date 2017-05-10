@@ -2,50 +2,117 @@
   <section class="hero">
     <div class="hero-body">
       <div class="container">
-        <div class="level">
-          <div class="level-left">
-            <p class="level-item"><strong>Network</strong></p>
-            <a class="button is-primary is-focused level-item"  @click="prompt">Add Device</a>
+        <div class="columns  is-multiline">
+          <div class="column is-8 is-offset-2">
+            <div class="level">
+              <div class="level-left">
+                <p class="level-item"><strong>Network</strong></p>
+                <a class="button is-primary is-focused level-item"  @click="prompt">Add Device</a>
+              </div>
+            </div>
+          </div>
+          <div class="column is-8 is-offset-2 is-hidden-mobile">
+            <table class="table is-bordered" v-if="!(info === '')">
+              <thead>
+                <tr>
+                  <th>Device</th>
+                  <th>MEMMORY</th>
+                  <th>CPU</th>
+                  <th>TEMP</th>
+                  <th>IN</th>
+                  <th>OUT</th>
+                  <th>DELETE</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="i in info">
+                  <td>{{i.name}}</td>
+                  <td></td>
+                  <td>{{i.cpu}}</td>
+                  <td>{{i.temp}}</td>
+                  <td>{{i.inbound}}</td>
+                  <td>{{i.outbound}}</td>
+                  <td width="10"><a class="button is-danger" @click="remove(i.name)">DELETE</a></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-        <table class="table is-bordered" v-if="!(info === '')">
-          <thead>
-            <tr>
-              <th>Device</th>
-              <th>CPU</th>
-              <th>TEMP</th>
-              <th>In</th>
-              <th>OUT</th>
-              <th>xxx</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="i in info">
-              <td>{{i.name}}</td>
-              <td>{{i.cpu}}</td>
-              <td>{{i.temp}}</td>
-              <td>{{i.inbound}}</td>
-              <td>{{i.outbound}}</td>
-              <td @click="remove(i.name)">xx</td>
-            </tr>
-          </tbody>
-        </table>
-        <b-table :data="info">
-          <template scope="props">
-            <b-table-column field="name" label="Device Name" width="40">
-                {{ props.name }}
-            </b-table-column>
-            <b-table-column field="cpu" label="CPU" width="40">
-                {{ props.cpu }}
-            </b-table-column>
-            <b-table-column field="temp" label="TEMP" width="40">
-                {{ props.temp}}
-            </b-table-column>
-            <b-table-column field="inbound" label="IN" width="40">
-                {{ props.inbound}}
-            </b-table-column>
-          </template>
-        </b-table>
+        <div class="is-hidden-tablet" v-if="!(info === '')">
+          <table class="table is-bordered" v-for="i in info">
+            <tbody>
+              <tr>
+                <td>
+                  <div class="level is-mobile">
+                    <div class="level-item level-left">
+                      <p class=""><b>Device</b></p>
+                    </div>
+                    <div class="level-item level-right">
+                      <p class="">{{i.name}}</p>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="level is-mobile">
+                    <div class="level-item level-left">
+                      <p class=""><b>CPU</b></p>
+                    </div>
+                    <div class="level-item level-right">
+                      <p class="">{{i.cpu}}</p>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="level is-mobile">
+                    <div class="level-item level-left">
+                      <p class=""><b>TEMP</b></p>
+                    </div>
+                    <div class="level-item level-right">
+                      <p class="">{{i.temp}}</p>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="level is-mobile">
+                    <div class="level-item level-left">
+                      <p class=""><b>IN</b></p>
+                    </div>
+                    <div class="level-item level-right">
+                      <p class="">{{i.inbound}}</p>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="level is-mobile">
+                    <div class="level-item level-left">
+                      <p class=""><b>OUT</b></p>
+                    </div>
+                    <div class="level-item level-right">
+                      <p class="">{{i.outbound}}</p>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="level is-mobile">
+                    <div class="level-item has-text-centered">
+                      <p class=""><a class="delete is-large" @click="remove(i.name)"></a></p>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </section>
@@ -57,6 +124,7 @@ export default {
   props: ['select'],
   data () {
     return {
+      selected: {}
     }
   },
   mounted () {

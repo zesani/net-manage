@@ -4,13 +4,13 @@
       <div class="container">
         <div class="tabs menu-bar">
           <ul>
-            <li :class="selectMenu[0].style" @click="select(0)"><router-link to="/">Monitor</router-link></a></li>
-            <li :class="selectMenu[1].style" @click="select(1)"><router-link to="/bandwidth">Bandwidth</router-link></li>
+            <li :class="selectMenu[0].style" @click="select(0)"><router-link to="/">Monitor</router-link></li>
+            <li :class="selectMenu[1].style" @click="select(1)"><router-link to="/interface">Interface</router-link></li>
           </ul>
         </div>
+        <router-view :select="select"></router-view>
       </div>
     </section>
-    <router-view :select="select"></router-view>
     <ul>
       <li v-for="i in InFire">{{i.name}}---{{i.inbound}}---{{i.outbound}}</li>
     </ul>
